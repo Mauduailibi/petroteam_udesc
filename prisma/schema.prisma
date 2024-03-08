@@ -8,7 +8,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
+model Player {
 	id			String	@id	@default(cuid())
 	userId		String	@unique
 	name		String
@@ -32,7 +32,7 @@ model User {
 model Training {
 	id			String	@id	@default(cuid())
 
-	users 		User[]
+	players 	Player[]
 	buzzes		Buzz[]
 
 	createdAt	DateTime	@default(now())
@@ -70,7 +70,7 @@ model Buzz {
 	isCorrect	Boolean
 
 	userId		String
-	user		User	@relation(fields: [userId], references: [id], onDelete: Cascade)
+	player		Player	@relation(fields: [userId], references: [id], onDelete: Cascade)
 	questionId	String
 	question	Question	@relation(fields: [questionId], references: [id], onDelete: Cascade)
 	trainingId	String
