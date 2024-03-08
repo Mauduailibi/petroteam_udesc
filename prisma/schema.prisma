@@ -1,0 +1,85 @@
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+	id			String	@id	@default(cuid())
+	userId		String	@unique
+	name		String
+	avatarUrl 	String	@db.Text
+	email		String
+
+	dateOfBirth	DateTime?
+	gender		String?
+	academicId	String?
+	phone		String?
+	instagram	String?
+	isActive	Boolean	@default(false)
+
+	trainings	Training[]
+	buzzes		Buzz[]
+
+	createdAt	DateTime	@default(now())
+	updatedAt	DateTime	@updatedAt
+}
+
+model Training {
+	id			String	@id	@default(cuid())
+
+	users 		User[]
+	buzzes		Buzz[]
+
+	createdAt	DateTime	@default(now())
+	updatedAt	DateTime	@updatedAt
+}
+
+model Category {
+	id			String	@id	@default(cuid())
+	name		String  @unique
+
+	questions 	Question[]
+
+	createdAt	DateTime	@default(now())
+	updatedAt	DateTime	@updatedAt
+}
+
+model Question {
+	id			String	@id	@default(cuid())
+	question	String	@db.Text
+	answer		String	@db.Text
+
+	categoryId	String?
+	category	Category?	@relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+	buzzes		Buzz[]
+
+	createdAt	DateTime	@default(now())
+	updatedAt	DateTime	@updatedAt
+
+	@@index([categoryId])
+}
+
+model Buzz {
+	id 			String	@id	@default(cuid())
+	isCorrect	Boolean
+
+	userId		String
+	user		User	@relation(fields: [userId], references: [id], onDelete: Cascade)
+	questionId	String
+	question	Question	@relation(fields: [questionId], references: [id], onDelete: Cascade)
+	trainingId	String
+	training	Training	@relation(fields: [trainingId], references: [id], onDelete: Cascade)
+
+	createdAt	DateTime	@default(now())
+	updatedAt	DateTime	@updatedAt
+
+	@@index([userId])
+	@@index([questionId])
+	@@index([trainingId])
+}
