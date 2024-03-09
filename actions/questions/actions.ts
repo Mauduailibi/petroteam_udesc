@@ -13,6 +13,7 @@ export async function getAllQuestions() {
     include: {
       category: true,
     },
+    take: 10,
   });
 
   return response;

@@ -10,6 +10,16 @@ export const TrainingsColumns: Array<ColumnDef<Training>> = [
   {
     accessorKey: 'createdAt',
     header: 'Data',
+    cell: ({ row }) => {
+      const createdAt: Date = row.getValue('createdAt');
+      const formattedDate = createdAt.toLocaleDateString();
+
+      return (
+        <div className="flex items-center justify-start space-x-2">
+          <p>{formattedDate}</p>
+        </div>
+      );
+    },
   },
   {
     accessorKey: 'id',
