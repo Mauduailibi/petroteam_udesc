@@ -23,8 +23,8 @@ export default async function JogadoresPage() {
   const inactivePlayers = players.filter((player: Player) => !player.isActive);
 
   return (
-    <div>
-      <h1 className="mb-6 text-3xl font-bold">Jogadores</h1>
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold">Jogadores</h1>
 
       <div className="flex w-full flex-col gap-4 lg:flex-row">
         <ActivePlayersList players={activePlayers} />

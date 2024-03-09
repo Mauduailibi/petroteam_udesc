@@ -19,22 +19,22 @@ export default function InactivePlayersList({
   const router = useRouter();
 
   async function activatePlayer(id: string) {
-    try {
-      await setPlayerActive(id).then(() => {
+    await setPlayerActive(id)
+      .then(() => {
         toast({
-          title: 'Jogador ativado',
+          title: 'Jogador ativado!',
           description: 'O jogador foi ativado com sucesso',
         });
 
         router.refresh();
+      })
+      .catch(() => {
+        toast({
+          title: 'Erro ao ativar jogador!',
+          description: 'Ocorreu um erro ao ativar o jogador',
+          variant: 'destructive',
+        });
       });
-    } catch (error) {
-      toast({
-        title: 'Erro ao ativar jogador',
-        description: 'Ocorreu um erro ao ativar o jogador',
-        variant: 'destructive',
-      });
-    }
   }
 
   return (

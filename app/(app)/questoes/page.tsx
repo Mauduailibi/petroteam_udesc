@@ -29,8 +29,8 @@ export default async function QuestoesPage() {
   const categoriesMap: Record<string, string> = await getCategoriesMap();
 
   return (
-    <div>
-      <h1 className="mb-6 text-3xl font-bold">Questões</h1>
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold">Questões</h1>
 
       <Card>
         <CardHeader>
